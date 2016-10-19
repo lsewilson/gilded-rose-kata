@@ -36,4 +36,42 @@ describe("Gilded Rose", function() {
     });
   });
 
+  describe("Backstage Passes", function() {
+    it("should be able to change sell_in property", function() {
+      items = [ new Item("Backstage passes to a TAFKAL80ETC concert", 11, 10) ];
+      update_quality();
+      expect(items[0].sell_in).toEqual(10);
+    });
+    it("should increase quality by 1 in value when sell_in > 10 days", function(){
+      items = [ new Item("Backstage passes to a TAFKAL80ETC concert", 11, 10) ];
+      update_quality();
+      expect(items[0].quality).toEqual(11);
+    });
+    it("should increase quality by 2 in value when sell_in < 10 days", function(){
+      items = [ new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10) ];
+      update_quality();
+      expect(items[0].quality).toEqual(12);
+    });
+    it("should increase quality by 3 in value when sell_in < 6 days", function(){
+      items = [ new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10) ];
+      update_quality();
+      expect(items[0].quality).toEqual(13);
+    });
+    it("should increase quality by 3 when sell_in = 1 day", function() {
+      items = [ new Item("Backstage passes to a TAFKAL80ETC concert", 1, 10) ];
+      update_quality();
+      expect(items[0].quality).toEqual(13);
+    });
+    it("should have zero quality when sell_in < 0 days", function() {
+      items = [ new Item("Backstage passes to a TAFKAL80ETC concert", 0, 10) ];
+      update_quality();
+      expect(items[0].quality).toEqual(0);
+    });
+    it("should have have minimum quality of 0", function() {
+      items = [ new Item("Backstage passes to a TAFKAL80ETC concert", -1, 0) ];
+      update_quality();
+      expect(items[0].quality).toEqual(0);
+    });
+  });
+
 });
