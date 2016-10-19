@@ -10,9 +10,6 @@ function update() {
   for (var i = 0; i < items.length; i++) {
     _update_quality(items[i]);
     _update_sell_in(items[i]);
-    if (items[i].sell_in < 0) {
-      _update_quality(items[i]);
-    }
   }
 }
 
@@ -24,7 +21,7 @@ function _update_quality(item) {
   if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
     _update_backstage_pass_quality(item);
   } else if (item.name == "Sulfuras, Hand of Ragnaros") {
-    _update_sulfuras_quality(item);
+    _update_sulfuras_quality();
   } else if (item.name == "Aged Brie") {
     _update_brie_quality(item);
   } else if (item.name == "Conjured Mana Cake") {
@@ -37,8 +34,13 @@ function _update_quality(item) {
 function _update_sulfuras_quality() {}
 
 function _update_brie_quality(item) {
-  if (item.quality < 50) {
+  if (item.sell_in <= 0) {
+    item.quality += 2;
+  } else {
     item.quality++;
+  }
+  if (item.quality > 50) {
+    item.quality = 50;
   }
 }
 
@@ -47,7 +49,7 @@ function _update_backstage_pass_quality(item) {
     item.quality++;
   } else if (item.sell_in > 5) {
     item.quality += 2;
-  } else if (item.sell_in >= 0) {
+  } else if (item.sell_in > 0) {
     item.quality += 3;
   } else {
     item.quality = 0;
@@ -55,13 +57,23 @@ function _update_backstage_pass_quality(item) {
 }
 
 function _update_regular_quality(item) {
-  if (item.quality > 0) {
+  if (item.sell_in <= 0) {
+    item.quality -= 2;
+  } else {
     item.quality--;
+  }
+  if (item.quality < 0) {
+    item.quality = 0;
   }
 }
 
 function _update_conjured_quality(item) {
-  if (item.quality > 0) {
+  if (item.sell_in <= 0) {
+    item.quality -= 4;
+  } else {
     item.quality -= 2;
+  }
+  if (item.quality < 0 ) {
+    item.quality = 0;
   }
 }
