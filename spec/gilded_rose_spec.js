@@ -85,7 +85,7 @@ describe("Gilded Rose", function() {
       update_quality();
       expect(items[0].quality).toEqual(49);
     });
-    it("should decrease quality by 2 when sell_in < 0", function() {
+    it("should decrease quality only by 2 when sell_in < 0", function() {
       items = [ new Item("Regular Item", 0, 50) ];
       update_quality();
       expect(items[0].quality).toEqual(48);
@@ -96,4 +96,28 @@ describe("Gilded Rose", function() {
       expect(items[0].quality).toEqual(0);
     });
   });
+
+  describe("Conjured Mana Cake", function() {
+    it("should be able to change sell_in property", function() {
+      items = [ new Item("Conjured Mana Cake", 1, 10) ];
+      update_quality();
+      expect(items[0].sell_in).toEqual(0);
+    });
+    it("should decrease in quality by 2 when sell_in decreases by 1", function() {
+      items = [ new Item("Conjured Mana Cake", 1, 10) ];
+      update_quality();
+      expect(items[0].quality).toEqual(8);
+    });
+    it("should decrease in quality by 4 when sell_in decreases < 0 ", function() {
+      items = [ new Item("Conjured Mana Cake", 1, 10) ];
+      update_quality();
+      expect(items[0].quality).toEqual(8);
+    });
+    it("should have a minimum quality of 0", function() {
+      items = [ new Item("Conjured Mana Cake", 0, 0) ];
+      update_quality();
+      expect(items[0].quality).toEqual(0);
+    });
+  });
+
 });
