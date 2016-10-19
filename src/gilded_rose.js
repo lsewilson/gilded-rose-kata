@@ -6,20 +6,12 @@ function Item(name, sell_in, quality) {
 
 var items = [];
 
-function update_quality() {
+function update() {
   for (var i = 0; i < items.length; i++) {
     _update_quality(items[i]);
     _update_sell_in(items[i]);
     if (items[i].sell_in < 0) {
-      if (items[i].name == "Sulfuras, Hand of Ragnaros") {
-        _update_sulfuras_quality();
-      } else if (items[i].name == "Aged Brie") {
-        _update_brie_quality(items[i]);
-      } else if (items[i].name == "Conjured Mana Cake") {
-        _update_conjured_quality(items[i]);
-      } else {
-        _update_regular_quality(items[i]);
-      }
+      _update_quality(items[i]);
     }
   }
 }
@@ -55,7 +47,7 @@ function _update_backstage_pass_quality(item) {
     item.quality++;
   } else if (item.sell_in > 5) {
     item.quality += 2;
-  } else if (item.sell_in > 0) {
+  } else if (item.sell_in >= 0) {
     item.quality += 3;
   } else {
     item.quality = 0;
