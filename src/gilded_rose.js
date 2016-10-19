@@ -15,12 +15,16 @@ function update_quality() {
       _update_brie_quality(items[i]);
     } else if (items[i].name == "Backstage passes to a TAFKAL80ETC concert") {
       _update_backstage_pass_quality(items[i]);
+    } else {
+      _update_regular_quality(items[i]);
     }
     if (items[i].sell_in < 0) {
       if (items[i].name == "Sulfuras, Hand of Ragnaros") {
         _update_sulfuras_quality();
       } else if (items[i].name == "Aged Brie") {
         _update_brie_quality(items[i]);
+      } else {
+        _update_regular_quality(items[i]);
       }
     }
   }
@@ -47,5 +51,11 @@ function _update_backstage_pass_quality(item) {
     item.quality += 3;
   } else {
     item.quality = 0;
+  }
+}
+
+function _update_regular_quality(item) {
+  if (item.quality > 0) {
+    item.quality--;
   }
 }
