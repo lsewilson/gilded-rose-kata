@@ -74,4 +74,26 @@ describe("Gilded Rose", function() {
     });
   });
 
+  describe("Regular Item", function() {
+    it("should be able to change sell_in property", function() {
+      items = [ new Item("Regular Item", 1, 10) ];
+      update_quality();
+      expect(items[0].sell_in).toEqual(0);
+    });
+    it("should decrease quality only by 1", function() {
+      items = [ new Item("Regular Item", 10, 50) ];
+      update_quality();
+      expect(items[0].quality).toEqual(49);
+    });
+    it("should decrease quality by 2 when sell_in < 0", function() {
+      items = [ new Item("Regular Item", 0, 50) ];
+      update_quality();
+      expect(items[0].quality).toEqual(48);
+    });
+    it("should have a minimum quality of 0", function() {
+      items = [ new Item("Regular Item", -1, 1) ];
+      update_quality();
+      expect(items[0].quality).toEqual(0);
+    });
+  });
 });
